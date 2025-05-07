@@ -1,6 +1,11 @@
 import { useTable, FilterDropdown } from "@refinedev/antd";
 import { List, Table, Space, Input, Form, Button } from "antd";
-import { ShowButton, EditButton, DeleteButton, DateField } from "@refinedev/antd";
+import {
+  ShowButton,
+  EditButton,
+  DeleteButton,
+  DateField,
+} from "@refinedev/antd";
 import type { IMembership } from "../../types";
 
 export const MembershipsList = () => {
@@ -8,7 +13,7 @@ export const MembershipsList = () => {
     filters: {
       initial: [
         { field: "userId", operator: "contains", value: "" },
-        { field: "status", operator: "eq", value: "" },
+        { field: "company", operator: "contains", value: "" },
       ],
     },
   });
@@ -20,8 +25,8 @@ export const MembershipsList = () => {
           <Form.Item name="userId" noStyle>
             <Input placeholder="Search by User ID" />
           </Form.Item>
-          <Form.Item name="status" noStyle>
-            <Input placeholder="Search by Status" />
+          <Form.Item name="company" noStyle>
+            <Input placeholder="Search by Company" />
           </Form.Item>
           <Button type="primary" onClick={searchFormProps.form?.submit}>
             Search
@@ -29,26 +34,20 @@ export const MembershipsList = () => {
         </Space>
       </Form>
       <Table {...tableProps} rowKey="id">
+        <Table.Column dataIndex="userId" title="User ID" />
+        <Table.Column dataIndex="company" title="Company" />
+        <Table.Column dataIndex="position" title="Position" />
+        <Table.Column dataIndex="membershipType" title="Membership Type" />
         <Table.Column
-          dataIndex="userId"
-          title="User ID"
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Input placeholder="Search User ID" />
-            </FilterDropdown>
-          )}
+          dataIndex="startDate"
+          title="Start Date"
+          render={(value) => <DateField value={value} />}
         />
         <Table.Column
-          dataIndex="status"
-          title="Status"
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Input placeholder="Search Status" />
-            </FilterDropdown>
-          )}
+          dataIndex="endDate"
+          title="End Date"
+          render={(value) => <DateField value={value} />}
         />
-        <Table.Column dataIndex="startDate" title="Start Date" render={(value) => <DateField value={value} />} />
-        <Table.Column dataIndex="endDate" title="End Date" render={(value) => <DateField value={value} />} />
         <Table.Column
           title="Actions"
           dataIndex="actions"

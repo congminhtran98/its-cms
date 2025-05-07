@@ -18,8 +18,14 @@ export const MembershipShow = () => {
       <Title level={5}>User ID</Title>
       <TextField value={record?.userId} />
 
-      <Title level={5}>Status</Title>
-      <TextField value={record?.status} />
+      <Title level={5}>Company</Title>
+      <TextField value={record?.company} />
+
+      <Title level={5}>Position</Title>
+      <TextField value={record?.position} />
+
+      <Title level={5}>Membership Type</Title>
+      <TextField value={record?.membershipType} />
 
       <Title level={5}>Start Date</Title>
       <DateField value={record?.startDate} format="LLL" />
@@ -29,3 +35,4 @@ export const MembershipShow = () => {
     </Show>
   );
 };
+

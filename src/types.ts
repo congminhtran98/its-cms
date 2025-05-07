@@ -6,10 +6,15 @@ export interface IPost {
 
 export interface IEventRegistration {
   id: string;
-  status: string;
+  userId: number;
+  eventId: string;
+  status: "pending" | "confirmed" | "completed" | "canceled";
+  registeredAt: string;
   canceledAt?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  user?: IUser;
+  event?: IEvent;
 }
 
 export interface IEvent {
@@ -19,14 +24,18 @@ export interface IEvent {
   eventDate: string;
   location: string;
   capacity: number;
+  createdAt: string;
 }
 
 export interface IMembership {
   id: string;
-  userId: string;
-  status: string;
+  userId: number;
+  company: string;
+  position: string;
+  membershipType: string;
   startDate: string;
   endDate: string;
+  user?: IUser;
 }
 
 export interface IUser {
@@ -36,4 +45,6 @@ export interface IUser {
   phoneNumber: string;
   role: string;
   isVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

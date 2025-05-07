@@ -9,6 +9,7 @@ import {
   ErrorComponent,
   useNotificationProvider,
 } from "@refinedev/antd";
+import { resources } from "config/resources";
 
 import { createAuthProvider } from "./providers/auth";
 import { createDataProvider } from "./providers/data";
@@ -54,61 +55,7 @@ const App = () => {
         dataProvider={dataProvider}
         authProvider={authProvider}
         notificationProvider={useNotificationProvider}
-        resources={[
-          {
-            name: "posts",
-            list: "/posts",
-            create: "/posts/create",
-            edit: "/posts/:id/edit",
-            show: "/posts/:id",
-          },
-          {
-            name: "events",
-            list: "/events",
-            create: "/events/create",
-            edit: "/events/:id/edit",
-            show: "/events/:id",
-          },
-          {
-            name: "users",
-            list: "/users",
-            create: "/users/create",
-            edit: "/users/:id/edit",
-            show: "/users/:id",
-          },
-          {
-            name: "notifications",
-            list: "/notifications",
-            create: "/notifications/create",
-            edit: "/notifications/:id/edit",
-            show: "/notifications/:id",
-          },
-          {
-            name: "memberships",
-            list: "/memberships",
-            create: "/memberships/create",
-            edit: "/memberships/:id/edit",
-            show: "/memberships/:id",
-          },
-          {
-            name: "event-registrations",
-            list: "/event-registrations",
-            create: "/event-registrations/create",
-            edit: "/event-registrations/:id/edit",
-            show: "/event-registrations/:id",
-          },
-          {
-            name: "contacts",
-            list: "/contacts",
-            create: "/contacts/create",
-            edit: "/contacts/:id/edit",
-            show: "/contacts/:id",
-          },
-          {
-            name: "profile",
-            show: "/profile",
-          },
-        ]}
+        resources={resources}
         options={{
           syncWithLocation: true,
           warnWhenUnsavedChanges: true,

@@ -1,7 +1,13 @@
 import { List, useTable, FilterDropdown } from "@refinedev/antd";
-import { Table, Form, Input, Button, DatePicker, Select } from "antd";
+import { Table, Form, Input, Button, DatePicker, Select, Space } from "antd";
 import type { IEventRegistration } from "../../types";
 import { CrudFilters } from "@refinedev/core";
+import {
+  ShowButton,
+  EditButton,
+  DeleteButton,
+  DateField,
+} from "@refinedev/antd";
 
 interface ISearchForm {
   status?: string;
@@ -12,18 +18,23 @@ interface ISearchForm {
 export const EventRegistrationList: React.FC = () => {
   const { tableProps, searchFormProps } = useTable<IEventRegistration, any, ISearchForm>({
     onSearch: (values) => {
-      const filters: CrudFilters = [
-        {
+      const filters: CrudFilters = [];
+
+      if (values.status) {
+        filters.push({
           field: "status",
           operator: "contains",
           value: values.status,
-        },
-        {
+        });
+      }
+
+      if (values.id) {
+        filters.push({
           field: "id",
           operator: "eq",
           value: values.id,
-        },
-      ];
+        });
+      }
 
       if (values.dateRange?.[0]) {
         filters.push({
@@ -62,50 +73,44 @@ export const EventRegistrationList: React.FC = () => {
         </Button>
       </Form>
       <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="id" title="ID" sorter />
+        <Table.Column title="ID" dataIndex="id" sorter />
         <Table.Column
-          dataIndex="status"
-          title="Status"
-          sorter
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Select
-                style={{ minWidth: 200 }}
-                placeholder="Filter by status"
-                options={[
-                  { label: "Pending", value: "pending" },
-                  { label: "Completed", value: "completed" },
-                  { label: "Canceled", value: "canceled" },
-                ]}
-              />
-            </FilterDropdown>
-          )}
+          title="User"
+          render={(_, record: IEventRegistration) => record.user?.fullName}
         />
         <Table.Column
-          dataIndex="createdAt"
-          title="Created At"
-          render={(value: string) => {
-            return new Date(value).toLocaleString();
-          }}
-          sorter
+          title="Event"
+          render={(_, record: IEventRegistration) => record.event?.title}
         />
+        <Table.Column dataIndex="status" title="Status" sorter />
         <Table.Column
-          dataIndex="updatedAt"
-          title="Updated At"
-          render={(value: string) => {
-            return new Date(value).toLocaleString();
-          }}
+          dataIndex="registeredAt"
+          title="Registered At"
+          render={(value: string) => new Date(value).toLocaleString()}
           sorter
         />
         <Table.Column
           dataIndex="canceledAt"
           title="Canceled At"
-          render={(value: string) => {
-            return value ? new Date(value).toLocaleString() : "-";
-          }}
+          render={(value: string) =>
+            value ? new Date(value).toLocaleString() : "-"
+          }
           sorter
+        />
+                <Table.Column
+          title="Actions"
+          dataIndex="actions"
+          render={(_, record) => (
+            <Space>
+              <ShowButton hideText size="small" recordItemId={record.id} />
+              <EditButton hideText size="small" recordItemId={record.id} />
+              <DeleteButton hideText size="small" recordItemId={record.id} />
+            </Space>
+          )}
+          fixed="right"
         />
       </Table>
     </List>
   );
 };
+

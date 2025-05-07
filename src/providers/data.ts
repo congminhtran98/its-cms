@@ -128,4 +128,29 @@ export const createDataProvider = (apiUrl: string): DataProvider => ({
       data: json.data,
     };
   },
+  custom: async ({ url, method, filters, payload, sorters, query, headers: customHeaders }) => {
+    const res = await fetch(`${apiUrl}${url}`, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...getAuthHeader(),
+        ...customHeaders,
+      },
+      body: method !== "get" ? JSON.stringify(payload) : undefined,
+    });
+  
+    const json = await res.json();
+  
+    if (!res.ok) {
+      throw {
+        status: res.status,
+        message: json.message || "Custom request failed",
+      };
+    }
+  
+    return {
+      data: json.data ?? json, // fallback nếu không bọc trong `data`
+    };
+  }
+  
 });

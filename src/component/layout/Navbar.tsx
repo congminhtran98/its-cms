@@ -1,7 +1,13 @@
 import { Layout, Menu, Avatar, Dropdown, Space } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGetIdentity, useLogout } from "@refinedev/core";
-import { UserOutlined } from "@ant-design/icons";
+import {
+  SettingOutlined,
+  LogoutOutlined,
+  UserOutlined,
+  ProfileOutlined,
+} from "@ant-design/icons";
+
 import { IUser } from "../../types"; // Import your IUser type
 
 const { Header } = Layout;
@@ -16,21 +22,33 @@ export const Navbar = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="profile">
+      <Menu.Item key="profile" icon={<ProfileOutlined />}>
         <Link to="/profile">Profile</Link>
       </Menu.Item>
-      <Menu.Item key="settings">
+      <Menu.Item key="settings" icon={<SettingOutlined />}>
         <Link to="/settings">Settings</Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="logout" danger onClick={() => logout()}>
+      <Menu.Item
+        key="logout"
+        danger
+        icon={<LogoutOutlined />}
+        onClick={() => logout()}
+      >
         Logout
       </Menu.Item>
     </Menu>
   );
 
   return (
-    <Header style={{ background: "#fff", padding: "0 24px", display: "flex", justifyContent: "end" }}>
+    <Header
+      style={{
+        background: "#fff",
+        padding: "0 24px",
+        display: "flex",
+        justifyContent: "end",
+      }}
+    >
       {/* <Menu mode="horizontal" selectedKeys={[selectedKey]} style={{ flex: 1 }}>
         <Menu.Item key="posts">
           <Link to="/posts">Posts</Link>

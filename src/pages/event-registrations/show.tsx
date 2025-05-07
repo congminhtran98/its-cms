@@ -1,11 +1,11 @@
 import { Show, DateField, TextField } from "@refinedev/antd";
 import { useShow } from "@refinedev/core";
 import { Typography } from "antd";
-import { type IEventRegistration } from "../../types";
+import type { IEventRegistration } from "../../types";
 
 const { Title } = Typography;
 
-export const EventRegistrationShow = () => {
+export const EventRegistrationShow: React.FC = () => {
   const { queryResult } = useShow<IEventRegistration>();
   const { data, isLoading } = queryResult;
   const record = data?.data;
@@ -15,8 +15,17 @@ export const EventRegistrationShow = () => {
       <Title level={5}>ID</Title>
       <TextField value={record?.id} />
 
+      <Title level={5}>User</Title>
+      <TextField value={record?.user?.fullName} />
+
+      <Title level={5}>Event</Title>
+      <TextField value={record?.event?.title} />
+
       <Title level={5}>Status</Title>
       <TextField value={record?.status} />
+
+      <Title level={5}>Registered At</Title>
+      <DateField value={record?.registeredAt} format="YYYY-MM-DD HH:mm:ss" />
 
       <Title level={5}>Created At</Title>
       <DateField value={record?.createdAt} format="YYYY-MM-DD HH:mm:ss" />

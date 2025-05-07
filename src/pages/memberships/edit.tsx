@@ -1,45 +1,34 @@
 import React from "react";
-import { Edit, useForm, useSelect } from "@refinedev/antd";
-import { Form, Input, Select, DatePicker } from "antd";
+import { Edit, useForm } from "@refinedev/antd";
+import { Form, Input, DatePicker } from "antd";
 import type { IMembership } from "../../types";
 import dayjs from "dayjs";
 
 export const MembershipEdit: React.FC = () => {
-  const { formProps, saveButtonProps, queryResult } = useForm<IMembership>();
-
-  const { selectProps: userSelectProps } = useSelect({
-    resource: "users",
-    optionLabel: "id",
-    defaultValue: queryResult?.data?.data?.userId,
-  });
-
-  const statusOptions = [
-    {
-      label: "Active",
-      value: "active",
-    },
-    {
-      label: "Inactive",
-      value: "inactive",
-    },
-    {
-      label: "Pending",
-      value: "pending",
-    },
-    {
-      label: "Expired",
-      value: "expired",
-    },
-  ];
+  const { formProps, saveButtonProps } = useForm<IMembership>();
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
-        <Form.Item label="User" name="userId" rules={[{ required: true }]}>
-          <Select {...userSelectProps} />
+        <Form.Item label="User ID" name="userId" rules={[{ required: true }]}>
+          <Input disabled />
         </Form.Item>
-        <Form.Item label="Status" name="status" rules={[{ required: true }]}>
-          <Select options={statusOptions} />
+        <Form.Item label="Company" name="company" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Position"
+          name="position"
+          rules={[{ required: true }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Membership Type"
+          name="membershipType"
+          rules={[{ required: true }]}
+        >
+          <Input />
         </Form.Item>
         <Form.Item
           label="Start Date"
@@ -47,7 +36,9 @@ export const MembershipEdit: React.FC = () => {
           rules={[{ required: true }]}
           getValueProps={(value) => ({
             value: value ? dayjs(value) : undefined,
-          })}>
+          })}
+          getValueFromEvent={(date) => date?.toISOString()}
+        >
           <DatePicker style={{ width: "100%" }} />
         </Form.Item>
         <Form.Item
@@ -56,7 +47,9 @@ export const MembershipEdit: React.FC = () => {
           rules={[{ required: true }]}
           getValueProps={(value) => ({
             value: value ? dayjs(value) : undefined,
-          })}>
+          })}
+          getValueFromEvent={(date) => date?.toISOString()}
+        >
           <DatePicker style={{ width: "100%" }} />
         </Form.Item>
       </Form>
